@@ -15,7 +15,7 @@ exports.postSignup = (req, res, next) => {
     }, function (err, user) {
         if (user) return res.status(400).json({
             auth: false,
-            message: "email exits"
+            message: "This user's email already exists"
         });
 
         // if user doesn't exist, create a new User
