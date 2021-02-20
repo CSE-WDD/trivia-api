@@ -1,5 +1,5 @@
 {
-  "name": "cse341-authexample",
+  "name": "trivia-api",
   "version": "1.0.0",
   "description": "Authentication with jwt-authentication",
   "main": "index.js",
