@@ -5,16 +5,18 @@ const questionSchema = mongoose.Schema({
         type: String,
         required: true
     },
-    answer: {
-        text: {
-            type: String,
-            required: true
-        },
-        isTrue: {
-            type: Boolean,
-            required: false
+    answers: [{
+        answer: {
+            text: {
+                type: String,
+                required: true
+            },
+            isTrue: {
+                type: Boolean,
+                required: false
+            }
         }
-    },
+    }],
     category: {
         type: String,
         required: true
