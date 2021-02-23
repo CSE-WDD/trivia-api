@@ -14,7 +14,6 @@ const questionSchema = mongoose.Schema({
                 type: Boolean,
                 required: false
             }
-        }
     }],
     category: {
         type: String,
