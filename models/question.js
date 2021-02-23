@@ -6,17 +6,22 @@ const questionSchema = mongoose.Schema({
         required: true
     },
     answers: [{
-            text: {
-                type: String,
-                required: true
-            },
-            isTrue: {
-                type: Boolean,
-                required: false
-            }
+        text: {
+            type: String,
+            required: true
+        },
+        isTrue: {
+            type: Boolean,
+            required: false
+        }
     }],
     category: {
         type: String,
+        required: true
+    },
+    difficulty: {
+        type: String,
+        enum: [easy, medium, hard],
         required: true
     }
 });
