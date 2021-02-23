@@ -18,4 +18,4 @@ const gameSchema = mongoose.Schema({
 });
 
 
-module.exports = mongoose.model('Game', userSchema);
+module.exports = mongoose.model('Game', gameSchema);
