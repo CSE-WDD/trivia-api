@@ -1,6 +1,6 @@
 var mongoose = require('mongoose');
 
-const userSchema = mongoose.Schema({
+const questionSchema = mongoose.Schema({
     question: {
         type: String,
         required: true
