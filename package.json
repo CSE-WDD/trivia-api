@@ -1,7 +1,7 @@
 {
   "name": "trivia-api",
   "version": "1.0.0",
-  "description": "Authentication with jwt-authentication",
+  "description": "Trivia API for the CSE-WDD Team 5 Trivia Game.",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
