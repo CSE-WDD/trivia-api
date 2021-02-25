@@ -46,10 +46,10 @@ const userSchema = mongoose.Schema({
     default: 0,
   },
   highScores: {
-    recent: [{ type: Number }],
-    easy: [{ type: Number }],
-    medium: [{ type: Number }],
-    hard: [{ type: Number }],
+    recent: { type: mongoose.SchemaTypes.ObjectId, ref: 'Game', default: null },
+    easy: { type: mongoose.SchemaTypes.ObjectId, ref: 'Game', default: null },
+    medium: { type: mongoose.SchemaTypes.ObjectId, ref: 'Game', default: null },
+    hard: { type: mongoose.SchemaTypes.ObjectId, ref: 'Game', default: null },
   },
 });
 
