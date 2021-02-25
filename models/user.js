@@ -40,6 +40,17 @@ const userSchema = mongoose.Schema({
     required: true,
     default: false,
   },
+  gameCount: {
+    type: Number,
+    required: true,
+    default: 0,
+  },
+  highScores: {
+    recent: { type: mongoose.SchemaTypes.ObjectId, ref: 'Game', default: null },
+    easy: { type: mongoose.SchemaTypes.ObjectId, ref: 'Game', default: null },
+    medium: { type: mongoose.SchemaTypes.ObjectId, ref: 'Game', default: null },
+    hard: { type: mongoose.SchemaTypes.ObjectId, ref: 'Game', default: null },
+  },
 });
 
 userSchema.pre('save', function (next) {
