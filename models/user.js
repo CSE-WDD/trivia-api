@@ -33,22 +33,33 @@ const userSchema = mongoose.Schema({
         minlength: 8
 
     },
+    gameCount: {
+        type: Number,
+        required: true,
+        default: 0
+    },
+    highScores: {
+        recent: [{ type: Number }],
+        easy: [{ type: Number }],
+        medium: [{ type: Number }],
+        hard: [{ type: Number }],
+    },
     token: {
         type: String
     }
 });
 
-userSchema.pre('save', function (next) {
+userSchema.pre('save', function(next) {
     var user = this;
 
     if (user.isModified('password')) {
         // generate a random 12 character string
-        bcrypt.genSalt(salt, function (err, salt) {
+        bcrypt.genSalt(salt, function(err, salt) {
             if (err) return next(err);
 
             // salt is a random set of characters used by encryption method to encrypt your data
             // random characters, taking password, scrambles your password within random characters
-            bcrypt.hash(user.password, salt, function (err, hash) {
+            bcrypt.hash(user.password, salt, function(err, hash) {
                 if (err) return next(err);
                 user.password = hash;
                 user.confirmPassword = hash;
@@ -61,34 +72,34 @@ userSchema.pre('save', function (next) {
     }
 });
 
-userSchema.methods.comparepassword = function (password, cb) {
-    bcrypt.compare(password, this.password, function (err, isMatch) {
+userSchema.methods.comparepassword = function(password, cb) {
+    bcrypt.compare(password, this.password, function(err, isMatch) {
         if (err) return cb(next);
         cb(null, isMatch);
     });
 };
 
 // generate token
-userSchema.methods.generateToken = function (cb) {
+userSchema.methods.generateToken = function(cb) {
     var user = this;
     var token = jwt.sign(user._id.toHexString(), config.SECRET);
 
     user.token = token;
-    user.save(function (err, user) {
+    user.save(function(err, user) {
         if (err) return cb(err);
         cb(null, user);
     })
 };
 
 // find by token
-userSchema.statics.findByToken = function (token, cb) {
+userSchema.statics.findByToken = function(token, cb) {
     var user = this;
 
-    jwt.verify(token, config.SECRET, function (err, decode) {
+    jwt.verify(token, config.SECRET, function(err, decode) {
         user.findOne({
             "_id": decode,
             "token": token
-        }, function (err, user) {
+        }, function(err, user) {
             if (err) return cb(err);
             cb(null, user);
         })
@@ -96,14 +107,14 @@ userSchema.statics.findByToken = function (token, cb) {
 };
 
 //delete token
-userSchema.methods.deleteToken = function (token, cb) {
+userSchema.methods.deleteToken = function(token, cb) {
     var user = this;
 
     user.update({
         $unset: {
             token: 1
         }
-    }, function (err, user) {
+    }, function(err, user) {
         if (err) return cb(err);
         cb(null, user);
     })
