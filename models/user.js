@@ -35,6 +35,11 @@ const userSchema = mongoose.Schema({
   token: {
     type: String,
   },
+  isAdmin: {
+    type: Boolean,
+    required: true,
+    default: false,
+  },
 });
 
 userSchema.pre('save', function (next) {
