@@ -34,11 +34,13 @@ questionSchema.statics.random = function(difficulty, category, callback) {
     if (err) {
       return callback(err);
     }
-    var rand = Math.floor(Math.random() * count);
+    
+    // var rand = Math.floor(Math.random() * count);
+
     this.find({
       difficulty: difficulty,
       category: category
-    }).skip(rand).limit(10).exec(callback);
+    }).limit(10).exec(callback);
   }.bind(this));
 };
 
