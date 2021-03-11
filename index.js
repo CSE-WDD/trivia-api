@@ -6,6 +6,7 @@ const cookieParser = require('cookie-parser');
 const envs = require('./config/env');
 const config = require('./config/config').get(envs.NODE_ENV);
 const authRoutes = require('./routes/auth');
+const gameRoutes = require('./routes/game');
 
 const app = express();
 app.use(
@@ -35,6 +36,7 @@ app.get('/', function (req, res) {
 });
 
 app.use(authRoutes);
+app.use(gameRoutes);
 
 // listening port
 const PORT = envs.API_PORT || 3000;
