@@ -29,4 +29,19 @@ const questionSchema = mongoose.Schema({
   },
 });
 
+questionSchema.statics.random = function(difficulty, category, callback) {
+  this.count(function(err, count) {
+    if (err) {
+      return callback(err);
+    }
+    
+    // var rand = Math.floor(Math.random() * count);
+
+    this.find({
+      difficulty: difficulty,
+      category: category
+    }).limit(10).exec(callback);
+  }.bind(this));
+};
+
 module.exports = mongoose.model('Question', questionSchema);
