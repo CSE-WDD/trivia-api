@@ -1,14 +1,12 @@
 const express = require('express');
 const router = express.Router();
 const {
-    postSignup,
-    postLogin,
-    getProfile,
-    getLogout
+  postSignup,
+  postLogin,
+  getProfile,
+  getLogout,
 } = require('../controllers/auth');
-const {
-    auth
-} = require('../middlewares/auth');
+const { auth } = require('../middlewares/auth');
 
 router.post('/api/register', postSignup);
 router.post('/api/login', postLogin);
