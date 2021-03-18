@@ -35,6 +35,19 @@ app.get('/', function (req, res) {
   res.status(200).send({ message: 'Welcome to login , sign-up api' });
 });
 
+app.use((req, res, next) => {
+  // '*' allows all clients to access the server through the API
+  // Otherwise, you can allow only certain domains by placing them in, using commas to separate
+  // res.setHeader('Access-Control-Allow-Origin', 'codepen.io');
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader(
+    'Access-Control-Allow-Methods',
+    'GET, POST, PUT, PATCH, DELETE, OPTIONS'
+  );
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+  next();
+});
+
 app.use(authRoutes);
 app.use(gameRoutes);
 
