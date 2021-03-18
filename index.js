@@ -39,7 +39,7 @@ app.use(authRoutes);
 app.use(gameRoutes);
 
 // listening port
-const PORT = envs.API_PORT || 3000;
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`app is live at ${PORT}`);
 });
