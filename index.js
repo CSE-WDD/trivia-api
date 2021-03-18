@@ -32,7 +32,7 @@ mongoose.connect(
 );
 
 app.get('/', function (req, res) {
-  res.status(200).send(`Welcome to login , sign-up api`);
+  res.status(200).send({ message: 'Welcome to login , sign-up api' });
 });
 
 app.use(authRoutes);
