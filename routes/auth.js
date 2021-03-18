@@ -12,13 +12,14 @@ const {
 } = require('../controllers/question');
 
 const {
-    auth
+    auth,
+    authAdmin
 } = require('../middlewares/auth');
 
 router.post('/api/register', postSignup);
 router.post('/api/login', postLogin);
 router.get('/api/profile', auth, getProfile);
 router.get('/api/logout', auth, getLogout);
-router.post('/api/submit-question', auth, postQuestion);
+router.post('/api/submit-question', authAdmin, postQuestion);
 
 module.exports = router;
