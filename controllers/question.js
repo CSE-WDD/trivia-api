@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 exports.postQuestion = (req, res, next) => {
     const question = new Question(req.body);
 
@@ -14,3 +15,11 @@ exports.postQuestion = (req, res, next) => {
         });
     })
 };
+=======
+exports.getQuestion = (req, res, next) => {
+    res.json({
+        isAuth: true,
+        id: req.user._id,
+    })
+}
+>>>>>>> 680d8b415d90552d9f4b23a7283381b22120eb6e
