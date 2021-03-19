@@ -128,4 +128,3 @@ userSchema.methods.deleteToken = function(token, cb) {
 };
 
 module.exports = mongoose.model('User', userSchema);
-a
