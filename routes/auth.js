@@ -4,7 +4,7 @@ const {
     postSignup,
     postLogin,
     getProfile,
-    getLogout
+    getLogout,
 } = require('../controllers/auth');
 
 const {
