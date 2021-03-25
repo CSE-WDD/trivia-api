@@ -9,7 +9,7 @@ const {
 } = require('../controllers/auth');
 
 const {
-    getQuestion,
+    getAllQuestions,
     postQuestion
 } = require('../controllers/question');
 
