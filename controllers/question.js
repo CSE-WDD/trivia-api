@@ -16,8 +16,8 @@ exports.postQuestion = (req, res, next) => {
 };
 
 exports.getQuestion = (req, res, next) => {
-  res.json({
-    isAuth: true,
-    id: req.user._id,
-  });
+    res.json({
+        isAuth: true,
+        id: req.user._id,
+    })
 };
