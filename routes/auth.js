@@ -10,7 +10,8 @@ const {
 
 const {
     getQuestion,
-    postQuestion
+    postQuestion,
+    editQuestion
 } = require('../controllers/question');
 
 const {
@@ -25,5 +26,6 @@ router.get('/api/logout', auth, getLogout);
 router.get('/api/get-user-scores', auth, getUserScores);
 router.get('/api/question', authAdmin, getQuestion);
 router.post('/api/submit-question', authAdmin, postQuestion);
+router.post('/api/edit-question', authAdmin, editQuestion);
 
 module.exports = router;

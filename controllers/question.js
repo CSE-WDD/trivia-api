@@ -1,3 +1,5 @@
+const Question = require('../models/question');
+
 exports.postQuestion = (req, res, next) => {
     const question = new Question(req.body);
 
@@ -20,4 +22,30 @@ exports.getQuestion = (req, res, next) => {
         isAuth: true,
         id: req.user._id,
     })
+};
+
+exports.editQuestion = (req, res, next) => {
+    const questionId = req.body.questionId
+    const question = req.body.question;
+    const answers = req.body.answers;
+    const category = req.body.category;
+    const difficulty = req.body.difficulty;
+
+    Question.findById(questionId).then(q => {
+        q.question = question;
+        q.answers = answers;
+        q.category = category;
+        q.difficulty = difficulty;
+    }).then(result => {
+        console.log(result);
+        res.status(200).json({
+            success: true,
+        })
+    }).catch(err => {
+        console.log(err);
+        res.status(400).json({
+            success: false,
+        })
+    })
+
 };
