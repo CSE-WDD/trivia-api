@@ -10,6 +10,7 @@ const {
 const {
     getQuestion,
     postQuestion,
+    deleteQuestion,
 } = require('../controllers/question');
 
 const {
@@ -23,5 +24,6 @@ router.get('/api/profile', auth, getProfile);
 router.get('/api/logout', auth, getLogout);
 router.get('/api/question', authAdmin, getQuestion);
 router.post('/api/submit-question', authAdmin, postQuestion);
+router.post('/api/delete-question', authAdmin, deleteQuestion);
 
 module.exports = router;
