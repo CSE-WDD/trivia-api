@@ -27,7 +27,6 @@ exports.getQuestion = (req, res, next) => {
 
 exports.deleteQuestion = (req, res, next) => {
     const questionId = req.body.questionId;
-    console.log(questionId);
     Question.findByIdAndRemove(questionId)
         .then((result) => {
             res.status(200).json({
