@@ -5,6 +5,7 @@ const {
     postLogin,
     getProfile,
     getLogout,
+    getUserScores
 } = require('../controllers/auth');
 
 const {
@@ -22,6 +23,7 @@ router.post('/api/register', postSignup);
 router.post('/api/login', postLogin);
 router.get('/api/profile', auth, getProfile);
 router.get('/api/logout', auth, getLogout);
+router.get('/api/get-user-scores', auth, getUserScores);
 router.get('/api/question', authAdmin, getQuestion);
 router.post('/api/submit-question', authAdmin, postQuestion);
 router.post('/api/delete-question', authAdmin, deleteQuestion);

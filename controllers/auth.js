@@ -76,7 +76,7 @@ exports.postLogin = (req, res, next) => {
             });
         }
     });
-}
+};
 
 exports.getProfile = (req, res, next) => {
     // getting profile, return JSON
@@ -86,11 +86,26 @@ exports.getProfile = (req, res, next) => {
         email: req.user.email,
         name: req.user.firstname + req.user.lastname
     })
-}
+};
 
 exports.getLogout = (req, res, next) => {
     req.user.deleteToken(req.token, (err, user) => {
         if (err) return res.status(400).send(err);
         res.sendStatus(200);
     });
-}
+};
+
+exports.getUserScores = (req, res, next) => {
+    const userId = req.user._id;
+    User.findById(userId)
+        .then(user => {
+            console.log(user);
+            return res.json({
+                isAuth: true,
+                id: user._id,
+                firstname: user.firstname,
+                lastname: user.lastname,
+                userScores: user.highScores
+            })
+        })
+};
