@@ -36,10 +36,13 @@ exports.editQuestion = (req, res, next) => {
         q.answers = answers;
         q.category = category;
         q.difficulty = difficulty;
+        q.save();
+        return q;
     }).then(result => {
         console.log(result);
         res.status(200).json({
-            success: true,
+            updatedQuestion: result,
+            success: true
         })
     }).catch(err => {
         console.log(err);
