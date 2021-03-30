@@ -21,7 +21,7 @@ exports.getQuestion = (req, res, next) => {
     res.json({
         isAuth: true,
         id: req.user._id,
-    })
+    });
 };
 
 exports.editQuestion = (req, res, next) => {
@@ -50,5 +50,21 @@ exports.editQuestion = (req, res, next) => {
             success: false,
         })
     })
+}
 
-};
+exports.deleteQuestion = (req, res, next) => {
+    const questionId = req.body.questionId;
+    Question.findByIdAndRemove(questionId)
+        .then((result) => {
+            res.status(200).json({
+                result: result,
+                success: true
+            });
+        })
+        .catch(err => {
+            console.log(err);
+            res.status(400).json({
+                success: false,
+            });
+        });
+}

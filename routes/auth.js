@@ -11,7 +11,8 @@ const {
 const {
     getQuestion,
     postQuestion,
-    editQuestion
+    editQuestion,
+    deleteQuestion,
 } = require('../controllers/question');
 
 const {
@@ -27,5 +28,6 @@ router.get('/api/get-user-scores', auth, getUserScores);
 router.get('/api/question', authAdmin, getQuestion);
 router.post('/api/submit-question', authAdmin, postQuestion);
 router.post('/api/edit-question', authAdmin, editQuestion);
+router.post('/api/delete-question', authAdmin, deleteQuestion);
 
 module.exports = router;
