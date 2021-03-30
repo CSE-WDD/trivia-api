@@ -1,3 +1,6 @@
+const question = require('../models/question');
+const Question = require('../models/question');
+
 exports.postQuestion = (req, res, next) => {
     const question = new Question(req.body);
 
@@ -23,12 +26,13 @@ exports.getQuestion = (req, res, next) => {
 };
 
 exports.deleteQuestion = (req, res, next) => {
-    const prodId = req.body.productId;
-    Product.findByIdAndRemove(prodId)
-        .then(results => { console.log(results) })
-        .then(() => {
+    const questionId = req.body.questionId;
+    console.log(questionId);
+    Question.findByIdAndRemove(questionId)
+        .then((result) => {
             res.status(200).json({
-                success: true,
+                result: result,
+                success: true
             });
         })
         .catch(err => {
