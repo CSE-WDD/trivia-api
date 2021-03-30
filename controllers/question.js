@@ -1,8 +1,28 @@
 const Question = require('../models/question');
 
-exports.postQuestion = (req, res, next) => {
-    const question = new Question(req.body);
+exports.postQuestion = async (req, res, next) => {
+    let errors = [];
+    const newQuestion = req.body.question;
 
+   await Question.find()
+       .then(questions => {
+            questions.map(question => {
+                if (question.question.toString() === newQuestion.toString()) {
+                    const error = new Error('Question already exists');
+                    errors.push(error);
+                    return next(errors);
+                }
+            })
+       });
+    
+    if (errors.length > 0) {
+        return res.status(400).json({
+            success: false,
+            msg: errors.toString()
+        });
+    }
+
+    const question = new Question(req.body);
     question.save((err, doc) => {
         if (err) {
             console.log(err);
