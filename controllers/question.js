@@ -17,11 +17,14 @@ exports.postQuestion = (req, res, next) => {
     });
 };
 
-exports.getQuestion = (req, res, next) => {
-    res.json({
-        isAuth: true,
-        id: req.user._id,
-    });
+exports.getAllQuestions = (req, res, next) => {
+    Question.find()
+        .then(questions => {
+            res.json({
+                isAuth: true,
+                questions: questions
+            });
+        });
 };
 
 exports.editQuestion = (req, res, next) => {

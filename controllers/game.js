@@ -1,51 +1,6 @@
 const Question = require('../models/question');
 const Game = require('../models/game');
 
-// exports.startGame = (req, res, next) => {
-//   const difficulty = req.query.difficulty;
-//   const category = req.query.category;
-
-//   Question.random(difficulty, category, (err, questions) => {
-//       if (err) {
-//         throw new Error("Couldn't get qeustions!");
-//       }
-    
-//       const game = new Game({
-//         questions: questions,
-//         score: 0,
-//         userId: req.user._id,
-//       });
-//       // game.save((err, doc) => {
-//       //   if (err) {
-//       //       return res.status(400).json({
-//       //         success: false,
-//       //       });
-//       //   }
-//       //   next();
-//       // })
-
-//       // game.populate('questions.questionId')
-//       //   .execPopulate()
-//       //   .then((game) => {
-//       //     return game.questions.map((question) => {
-//       //       return question
-//       //     });
-//       //   })
-//       //   .then(questionId => {
-//       //     return Question.find({
-//       //         _id: questionId,
-//       //     });
-//       //   })
-//       //   .then((game) => {
-//       //     return res.status(200).json(game);
-//       //   })
-//       //   .catch((err) => {
-//       //     console.log(err);
-//       //   });
-
-//     }
-//   );
-// };
 
 exports.startGame = (req, res, next) => {
   const difficulty = req.query.difficulty;
