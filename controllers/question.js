@@ -1,7 +1,30 @@
 const Question = require('../models/question');
 
+// Question should only have one right answer
+const verifyAnswers = (arr) => {
+    let count = 0;
+    for (let i = 0; i < arr.length; i++) {
+        if (arr[i].isTrue) {
+            count++;
+        };
+    };
+
+    if (count == 1) {
+        return true;
+    } else {
+        return false;
+    };
+};
+
 exports.postQuestion = (req, res, next) => {
     const question = new Question(req.body);
+
+    if (!verifyAnswers(question.answers)) {
+        return res.status(400).json({
+            success: false,
+            message: "Only one answer should be true"
+        });
+    }
 
     question.save((err, doc) => {
         if (err) {
@@ -33,6 +56,13 @@ exports.editQuestion = (req, res, next) => {
     const answers = req.body.answers;
     const category = req.body.category;
     const difficulty = req.body.difficulty;
+
+    if (!verifyAnswers(answers)) {
+        return res.status(400).json({
+            success: false,
+            message: "Only one answer should be true"
+        });
+    }
 
     Question.findById(questionId).then(q => {
         q.question = question;
