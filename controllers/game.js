@@ -1,57 +1,55 @@
 const Question = require('../models/question');
 const Game = require('../models/game');
-
+const User = require('../models/user');
 
 exports.startGame = (req, res, next) => {
   const difficulty = req.query.difficulty;
   const category = req.query.category;
 
   Question.random(difficulty, category, (err, questions) => {
-
-      if (err) {
-        throw new Error("Couldn't get qeustions!");
-      }
-    
-      const questionsId = questions.map(question => {
-        return question._id
-      })
-    
-      const game = new Game({
-        questions: questionsId,
-        score: 0,
-        userId: req.user._id,
-      });
-    
-      game.save((err, doc) => {
-        if (err) {
-            return res.status(400).json({
-              success: false,
-            });
-        }
-      })
-
-      game.populate('questions')
-        .execPopulate()
-        .then(game => {
-          return game.questions.map((questionId) => {
-            return questionId
-          });
-        })
-        .then(questionId => {
-          return Question.find({
-              _id: questionId,
-          });
-        })
-        .then(questions => {
-          game.questions = questions;
-          res.status(200).json(game)
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-
+    if (err) {
+      throw new Error("Couldn't get qeustions!");
     }
-  );
+
+    const questionsId = questions.map((question) => {
+      return question._id;
+    });
+
+    const game = new Game({
+      questions: questionsId,
+      score: 0,
+      userId: req.user._id,
+    });
+
+    game.save((err, doc) => {
+      if (err) {
+        return res.status(400).json({
+          success: false,
+        });
+      }
+    });
+
+    game
+      .populate('questions')
+      .execPopulate()
+      .then((game) => {
+        return game.questions.map((questionId) => {
+          return questionId;
+        });
+      })
+      .then((questionId) => {
+        return Question.find({
+          _id: questionId,
+        });
+      })
+      .then((questions) => {
+        game.questions = questions;
+        res.status(200).json(game);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
 };
 
 exports.postGame = (req, res, next) => {
@@ -60,9 +58,79 @@ exports.postGame = (req, res, next) => {
 
   Game.findById(gameID)
     .then((game) => {
-      game.score = score;
+      game
+        .populate('questions')
+        .execPopulate()
+        .then((game) => {
+          // Get the game difficulty
+          const difficulty = game.questions[0].difficulty;
+          let multiplier = 1;
 
-      game.save();
+          switch (difficulty) {
+            case 'easy':
+              multiplier = 1;
+              break;
+            case 'medium':
+              multiplier = 10;
+              break;
+            case 'hard':
+              multiplier = 100;
+              break;
+            default:
+              multiplier = 1;
+          }
+
+          // Set the game score
+          game.score = score * multiplier;
+
+          User.findById(game.userId).then((user) => {
+            // Set the user's most recent game score.
+            user.highScores.recent = game._id;
+
+            // Check if user has a game stored at that difficulty
+            if (user.highScores[difficulty] === null) {
+              user.highScores[difficulty] = game._id;
+            } else {
+              const populateString = 'highScores.' + difficulty;
+              let currentScore = 0;
+              user
+                .populate(populateString)
+                .execPopulate()
+                .then((user) => {
+                  currentScore = user.highScores[difficulty].score;
+
+                  // Compare scores
+                  if (
+                    currentScore < game.score ||
+                    currentScore === game.score
+                  ) {
+                    // Replace old game if this game is a higher score.
+                    user.highScores[difficulty] = game._id;
+                  }
+
+                  // Save the games to the user
+                  user.save();
+                })
+                .catch((err) => {
+                  return res.status(400).json({
+                    error: err,
+                  });
+                });
+            }
+          });
+
+          // Save the game
+          game.save();
+        })
+        .catch((err) => {
+          return res.status(400).json({
+            error: err,
+          });
+        });
+
+      return res.status(200).json({
+        message: 'Game saved!',
+      });
     })
     .catch((err) => {
       return res.status(400).json({
