@@ -8,7 +8,7 @@ exports.startGame = (req, res, next) => {
 
   Question.random(difficulty, category, (err, questions) => {
     if (err) {
-      throw new Error("Couldn't get qeustions!");
+      throw new Error("Couldn't get questions!");
     }
 
     const questionsId = questions.map((question) => {
@@ -90,6 +90,7 @@ exports.postGame = (req, res, next) => {
             // Check if user has a game stored at that difficulty
             if (user.highScores[difficulty] === null) {
               user.highScores[difficulty] = game._id;
+              user.save();
             } else {
               const populateString = 'highScores.' + difficulty;
               let currentScore = 0;
