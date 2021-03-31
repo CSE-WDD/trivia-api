@@ -139,3 +139,25 @@ exports.postGame = (req, res, next) => {
       });
     });
 };
+
+exports.getHighScores = async (req, res, next) => {
+  const games = await Game.find({}, {}, {
+    sort: {
+      score: -1
+    },
+    limit: 10
+  })
+    .populate('userId');
+  
+  const names = games.map(game => {
+    return {
+      name: game.userId.firstname + ' ' + game.userId.lastname,
+      score: game.score
+    }
+  });
+
+  return res.status(200).json({
+    leaderBoard: names
+  });
+
+};

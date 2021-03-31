@@ -1,4 +1,5 @@
 const User = require('../models/user');
+const Game = require('../models/game');
 
 exports.postSignup = (req, res, next) => {
   // We need to validate the req.body (email, user, etc)
@@ -111,11 +112,24 @@ exports.getLogout = (req, res, next) => {
 exports.deleteUser = (req, res, next) => {
   const userId = req.user._id;
 
-  User.deleteOne({ _id: userId })
-    .then((result) => {
-      return res.status(204);
-    })
+  Game.deleteMany({
+    userId: userId
+  })
+    .then(() => {
+      User.deleteOne({ _id: userId })
+      .then((result) => {
+        return res.status(204).json({
+          msg: result
+        });
+      })
+      .catch(err => {
+        return res.status(400).json({
+          error: err
+        });
+      })
+  })
     .catch((err) => {
+      console.log(err)
       return res.status(400).json({
         error: err,
       });
@@ -125,7 +139,6 @@ exports.deleteUser = (req, res, next) => {
 exports.getUserScores = (req, res, next) => {
   const userId = req.user._id;
   User.findById(userId).then((user) => {
-    console.log(user);
     return res.json({
       isAuth: true,
       id: user._id,
