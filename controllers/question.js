@@ -1,31 +1,28 @@
 const Question = require('../models/question');
 
-// Question should only have one right answer
-const verifyAnswers = (arr) => {
-    let count = 0;
-    for (let i = 0; i < arr.length; i++) {
-        if (arr[i].isTrue) {
-            count++;
-        };
-    };
+exports.postQuestion = async (req, res, next) => {
+    let errors = [];
+    const newQuestion = req.body.question;
 
-    if (count == 1) {
-        return true;
-    } else {
-        return false;
-    };
-};
-
-exports.postQuestion = (req, res, next) => {
-    const question = new Question(req.body);
-
-    if (!verifyAnswers(question.answers)) {
+   await Question.find()
+       .then(questions => {
+            questions.map(question => {
+                if (question.question.toString() === newQuestion.toString()) {
+                    const error = new Error('Question already exists');
+                    errors.push(error);
+                    return next(errors);
+                }
+            })
+       });
+    
+    if (errors.length > 0) {
         return res.status(400).json({
             success: false,
-            message: "Only one answer should be true"
+            msg: errors.toString()
         });
     }
 
+    const question = new Question(req.body);
     question.save((err, doc) => {
         if (err) {
             console.log(err);
