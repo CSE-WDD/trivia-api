@@ -54,6 +54,13 @@ exports.editQuestion = (req, res, next) => {
     const category = req.body.category;
     const difficulty = req.body.difficulty;
 
+    if (!verifyAnswers(answers)) {
+        return res.status(400).json({
+            success: false,
+            message: "Only one answer should be true"
+        });
+    }
+
     Question.findById(questionId).then(q => {
         q.question = question;
         q.answers = answers;
