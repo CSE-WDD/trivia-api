@@ -1,6 +1,5 @@
 const User = require('../models/user');
 const Game = require('../models/game');
-const nodemon = require('nodemon');
 
 exports.postSignup = (req, res, next) => {
   // We need to validate the req.body (email, user, etc)
