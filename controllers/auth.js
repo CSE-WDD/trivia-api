@@ -77,11 +77,7 @@ exports.postLogin = (req, res, next) => {
             // save token to db
             user.generateToken((err, user) => {
               if (err) return res.status(400).send(err);
-              res.cookie('auth', user.token, {
-                httpOnly: false,
-                secure: true,
-                sameSite: "none"
-              }).json({
+              res.cookie('auth', user.token).json({
                 isAuth: true,
                 id: user._id,
                 email: user.email,
