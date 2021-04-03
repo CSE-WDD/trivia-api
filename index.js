@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const cors = require('cors');
 const mongoose = require('mongoose');
 const bodyparser = require('body-parser');
 const cookieParser = require('cookie-parser');
@@ -50,6 +51,13 @@ app.use((req, res, next) => {
 
 app.use(authRoutes);
 app.use(gameRoutes);
+
+//cors
+const corsOptions = {
+    orgin: 'https://cse341matthewrapp-ecommerce.herokuapp.com',
+    optionsSuccessStatus: 200
+};
+app.use(cors(corsOptions));
 
 // listening port
 const PORT = process.env.PORT || 3000;
