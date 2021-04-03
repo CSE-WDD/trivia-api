@@ -49,7 +49,10 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(cors());
+const corsOptions = {
+  orgin: '*'
+}
+app.use(cors(corsOptions));
 
 app.use(authRoutes);
 app.use(gameRoutes);
