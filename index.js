@@ -50,19 +50,12 @@ app.use((req, res, next) => {
 });
 
 const corsOptions = {
-  orgin: '*'
-}
+  origin: '*'
+};
 app.use(cors(corsOptions));
 
 app.use(authRoutes);
 app.use(gameRoutes);
-
-//cors
-// const corsOptions = {
-//     orgin: 'https://cse341matthewrapp-ecommerce.herokuapp.com',
-//     optionsSuccessStatus: 200
-// };
-// app.use(cors(corsOptions));
 
 // listening port
 const PORT = process.env.PORT || 3000;
