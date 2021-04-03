@@ -49,15 +49,17 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use(cors());
+
 app.use(authRoutes);
 app.use(gameRoutes);
 
 //cors
-const corsOptions = {
-    orgin: 'https://cse341matthewrapp-ecommerce.herokuapp.com',
-    optionsSuccessStatus: 200
-};
-app.use(cors(corsOptions));
+// const corsOptions = {
+//     orgin: 'https://cse341matthewrapp-ecommerce.herokuapp.com',
+//     optionsSuccessStatus: 200
+// };
+// app.use(cors(corsOptions));
 
 // listening port
 const PORT = process.env.PORT || 3000;
