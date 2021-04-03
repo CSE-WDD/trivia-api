@@ -50,11 +50,11 @@ app.use((req, res, next) => {
   next();
 });
 
-// const corsOptions = {
-//   origin: '*',
-//   credentials: true
-// };
-// app.use(cors(corsOptions));
+const corsOptions = {
+  origin: '*',
+  credentials: true
+};
+app.use(cors(corsOptions));
 
 app.use(authRoutes);
 app.use(gameRoutes);
