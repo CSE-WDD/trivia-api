@@ -22,11 +22,18 @@ app.get('/', function (req, res) {
   res.status(200).send({ message: 'Welcome to login , sign-up api' });
 });
 
+// cors
+
 app.use((req, res, next) => {
   // '*' allows all clients to access the server through the API
   // Otherwise, you can allow only certain domains by placing them in, using commas to separate
-  // res.setHeader('Access-Control-Allow-Origin', 'codepen.io');
-  res.setHeader('Access-Control-Allow-Origin', '*');
+  const origins = ['http://localhost:3001', 'http://localhost:3000'];
+  const origin = req.headers.origin;
+  if (origins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  } else {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+  }
   res.setHeader(
     'Access-Control-Allow-Methods',
     'GET, POST, PUT, PATCH, DELETE, OPTIONS'
@@ -36,11 +43,10 @@ app.use((req, res, next) => {
   next();
 });
 
-const corsOptions = {
-  origin: '*',
-  credentials: true
-};
-app.use(cors(corsOptions));
+// const corsOptions = {
+//   credentials: true
+// };
+// app.use(cors(corsOptions));
 
 app.use(authRoutes);
 app.use(gameRoutes);
