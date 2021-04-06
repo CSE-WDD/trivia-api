@@ -1,0 +1,394 @@
+{
+	"info": {
+		"_postman_id": "5e07ae9b-5b50-4ab7-a45a-4dad888b7ec0",
+		"name": "Trivia API",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "User Profile",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_PATH}}api/profile",
+							"host": [
+								"{{API_PATH}}api"
+							],
+							"path": [
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "firstname",
+									"value": "Matt",
+									"type": "text"
+								},
+								{
+									"key": "lastname",
+									"value": "Rapp",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "55@gmail.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "dummyone",
+									"type": "text"
+								},
+								{
+									"key": "confirmPassword",
+									"value": "dummyone",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{API_PATH}}api/register",
+							"host": [
+								"{{API_PATH}}api"
+							],
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"55@gmail.com\",\n    \"password\": \"dummyone\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_PATH}}api/login",
+							"host": [
+								"{{API_PATH}}api"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_PATH}}api/logout",
+							"host": [
+								"{{API_PATH}}api"
+							],
+							"path": [
+								"logout"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_PATH}}api/deleteUser",
+							"host": [
+								"{{API_PATH}}api"
+							],
+							"path": [
+								"deleteUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get User Scores",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{API_PATH}}api/get-user-scores",
+							"host": [
+								"{{API_PATH}}api"
+							],
+							"path": [
+								"get-user-scores"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Game",
+			"item": [
+				{
+					"name": "Get Game",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "{{API_PATH}}api/getGame?difficulty=medium&category=Sports",
+							"host": [
+								"{{API_PATH}}api"
+							],
+							"path": [
+								"getGame"
+							],
+							"query": [
+								{
+									"key": "difficulty",
+									"value": "medium"
+								},
+								{
+									"key": "category",
+									"value": "Sports"
+								},
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiJ9.NjA2OGNjM2U2OTE0ZjBmYTYzNGRhOTZk.EDF7cRrl8l_WTsJLw9-GtGvKGVOxbxkFk8Iz6SOiqpk",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get High Scores",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "{{API_PATH}}api/getHighScores",
+							"host": [
+								"{{API_PATH}}api"
+							],
+							"path": [
+								"getHighScores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Save Game",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": [
+								{
+									"key": "gameID",
+									"value": "606c8f39360abb0004aca16f",
+									"type": "text"
+								},
+								{
+									"key": "score",
+									"value": "35",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "{{API_PATH}}api/saveGame",
+							"host": [
+								"{{API_PATH}}api"
+							],
+							"path": [
+								"saveGame"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Admin",
+			"item": [
+				{
+					"name": "Delete Question",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"questionId\": \"606bb9379677cb6415c774ae\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_PATH}}api/delete-question",
+							"host": [
+								"{{API_PATH}}api"
+							],
+							"path": [
+								"delete-question"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Edit Question",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"questionId\": \"606bb9379677cb6415c774ae\",\n    \"question\": \"Who is Matthew Bryant?\",\n    \"answers\": [\n        {\n            \"text\": \"Famous Basketball Player\",\n            \"isTrue\": true\n        },\n        {\n            \"text\": \"Musician\",\n            \"isTrue\": false\n        },\n        {\n            \"text\": \"Movie Star\",\n            \"isTrue\": false\n        },\n        {\n            \"text\": \"President\",\n            \"isTrue\": false\n        }\n    ],\n    \"difficulty\": \"hard\",\n    \"category\": \"Sports\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_PATH}}api/edit-question",
+							"host": [
+								"{{API_PATH}}api"
+							],
+							"path": [
+								"edit-question"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Post Question",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"question\": \"Who is Ian Petty?\",\n    \"answers\": [\n        {\n            \"text\": \"Famous Basketball Player\",\n            \"isTrue\": true\n        },\n        {\n            \"text\": \"Musician\",\n            \"isTrue\": false\n        },\n        {\n            \"text\": \"Movie Star\",\n            \"isTrue\": false\n        },\n        {\n            \"text\": \"President\",\n            \"isTrue\": false\n        }\n    ],\n    \"difficulty\": \"medium\",\n    \"category\": \"Sports\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{API_PATH}}api/submit-question",
+							"host": [
+								"{{API_PATH}}api"
+							],
+							"path": [
+								"submit-question"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Questions",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "urlencoded",
+							"urlencoded": []
+						},
+						"url": {
+							"raw": "{{API_PATH}}api/get-all-questions",
+							"host": [
+								"{{API_PATH}}api"
+							],
+							"path": [
+								"get-all-questions"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Index",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": ""
+				}
+			},
+			"response": []
+		}
+	]
+}
