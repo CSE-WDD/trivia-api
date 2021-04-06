@@ -1,8 +1,13 @@
 const User = require('./../models/user');
 
 let auth = (req, res, next) => {
-  let token = req.cookies.auth !== undefined ? req.cookies.auth : req.body.token;
-  
+  let token;
+  if (req.method === 'GET') {
+    token = req.cookies.auth !== undefined ? req.cookies.auth : req.query.token;
+  } else {
+    token = req.cookies.auth !== undefined ? req.cookies.auth : req.body.token;
+  }
+
   User.findByToken(token, (err, user) => {
     if (err) throw err;
     if (!user)
@@ -17,7 +22,12 @@ let auth = (req, res, next) => {
 };
 
 let authAdmin = (req, res, next) => {
-  let token = req.cookies.auth !== undefined ? req.cookies.auth : req.body.token;
+  let token;
+  if (req.method === 'GET') {
+    token = req.cookies.auth !== undefined ? req.cookies.auth : req.query.token;
+  } else {
+    token = req.cookies.auth !== undefined ? req.cookies.auth : req.body.token;
+  }
 
   User.findByToken(token, (err, user) => {
     if (err) throw err;
