@@ -81,8 +81,9 @@ exports.postLogin = (req, res, next) => {
                 httpOnly: true
               }).json({
                 isAuth: true,
+                token: user.token,
                 id: user._id,
-                email: user.email,
+                email: user.email
               });
             });
           });

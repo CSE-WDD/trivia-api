@@ -25,8 +25,8 @@ app.get('/', function (req, res) {
 app.use((req, res, next) => {
   // '*' allows all clients to access the server through the API
   // Otherwise, you can allow only certain domains by placing them in, using commas to separate
-  // res.setHeader('Access-Control-Allow-Origin', 'codepen.io');
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  // res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
   res.setHeader(
     'Access-Control-Allow-Methods',
     'GET, POST, PUT, PATCH, DELETE, OPTIONS'
