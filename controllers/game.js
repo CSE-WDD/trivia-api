@@ -1,3 +1,4 @@
+const _ = require('lodash');
 const Question = require('../models/question');
 const Game = require('../models/game');
 const User = require('../models/user');
@@ -6,50 +7,54 @@ exports.startGame = (req, res, next) => {
   const difficulty = req.query.difficulty;
   const category = req.query.category;
 
-  Question.random(difficulty, category, (err, questions) => {
-    if (err) {
-      throw new Error("Couldn't get questions!");
-    }
+  // Parameters match parameters for "find"
+  var filter = { difficulty: difficulty, category: category };
 
-    const questionsId = questions.map((question) => {
-      return question._id;
-    });
-
-    const game = new Game({
-      questions: questionsId,
-      score: 0,
-      userId: req.user._id,
-    });
-
-    game.save((err, doc) => {
-      if (err) {
-        return res.status(400).json({
-          success: false,
-        });
-      }
-    });
-
-    game
-      .populate('questions')
-      .execPopulate()
-      .then((game) => {
-        return game.questions.map((questionId) => {
-          return questionId;
-        });
-      })
-      .then((questionId) => {
-        return Question.find({
-          _id: questionId,
-        });
-      })
-      .then((questions) => {
-        game.questions = questions;
-        res.status(200).json(game);
-      })
-      .catch((err) => {
-        console.log(err);
+  Question.find(filter)
+    .then((questions) => {
+      shuffled_questions = _.shuffle(questions);
+      return shuffled_questions.slice(0, 10);
+    })
+    .then((questions) => {
+      const questionsId = questions.map((question) => {
+        return question._id;
       });
-  });
+
+      const game = new Game({
+        questions: questionsId,
+        score: 0,
+        userId: req.user._id,
+      });
+
+      game.save((err, doc) => {
+        if (err) {
+          return res.status(400).json({
+            success: false,
+          });
+        }
+      });
+
+      game
+        .populate('questions')
+        .execPopulate()
+        .then((game) => {
+          return game.questions.map((questionId) => {
+            return questionId;
+          });
+        })
+        .then((questionId) => {
+          return Question.find({
+            _id: questionId,
+          });
+        })
+        .then((questions) => {
+          game.questions = questions;
+          res.status(200).json(game);
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    });
 };
 
 exports.postGame = (req, res, next) => {
@@ -141,23 +146,25 @@ exports.postGame = (req, res, next) => {
 };
 
 exports.getHighScores = async (req, res, next) => {
-  const games = await Game.find({}, {}, {
-    sort: {
-      score: -1
-    },
-    limit: 10
-  })
-    .populate('userId');
-  
-  const names = games.map(game => {
+  const games = await Game.find(
+    {},
+    {},
+    {
+      sort: {
+        score: -1,
+      },
+      limit: 10,
+    }
+  ).populate('userId');
+
+  const names = games.map((game) => {
     return {
       name: game.userId.firstname + ' ' + game.userId.lastname,
-      score: game.score
-    }
+      score: game.score,
+    };
   });
 
   return res.status(200).json({
-    leaderBoard: names
+    leaderBoard: names,
   });
-
 };
